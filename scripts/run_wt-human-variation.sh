@@ -14,13 +14,13 @@ WORKINGDIR=/data/temp/nextflow-workflow/${SAMPLE_NAME}
 mkdir -p $OUTUT
 mkdir -p $WORKINGDIR
 
-if [ -e $MDOEL ]
+if [[ -e $MDOEL ]]
 then
     echo "Cair model: " $MODEL
 else
     mkdir -p "/data/model"
     wget -p $MODEL_DIR  $MODEL_URL
-    tar xvf $MODEL_DIR/(basename $url)
+    tar xvf $MODEL_DIR/$(basename $url)
 fi
 
 
