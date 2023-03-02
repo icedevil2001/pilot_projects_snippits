@@ -10,8 +10,19 @@ mkdir -p $OUTPUTDIR
 REF_GZ=$OUTPUTDIR/$(basename $_URL)
 REF=${REF_GZ%.gz}
 
-if [[ ! -f $REF_GZ ]]
+if [[ -f $REF ]]
 then
+    echo "SKIPPED: Reference genome exists"
+else
+    echo "Download reference genome  $(basename $_URL)"
     wget --directory-prefix $OUTPUTDIR $_URL
-    gzip -dc $REF_GZ > REF
+    
+    echo "Extracting gzip file"
+    gzip -dc $REF_GZ > $REF
+
+    echo "Index reference genome"
+    samtools faidx $REF
+
+    echo "Delete gzip file"
+    rm $REF_GZ
 fi
