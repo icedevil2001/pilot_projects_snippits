@@ -45,18 +45,21 @@ else
     tar xvf $(basename -- "$MODEL_URL")
 fi
 
+echo $OUTPUT
 
-## run Workflow
+    #--genome hg38 
+# run Workflow
 nextflow run /data/git_repo/wf-human-variation \
     -w /data/temp/nextflow-workflow/${SAMPLE_NAME} \
     -profile standard \
     -resume \
-    --snp --sv --methyl --cnv \
+    --snp --sv --methyl \
     --bam $BAM \
     --ref $REF \
-    --threads 20 \
+    --bin_size 10 \
     --sample_name $SAMPLE_NAME \
     --sv_types "INS,DEL,DUP,BND,INV" \
     --max_sv_length 1000000 \
     --clair3_model_path $MODEL \
-    --out_dir $OUTPUT
+    --out_dir $OUTPUT \
+    --threads 20  
